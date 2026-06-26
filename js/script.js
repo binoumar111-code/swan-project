@@ -314,7 +314,7 @@
   const voiceHint   = $('voiceHint');
   if(voiceBtn){
     const voiceAudio = new Audio();
-    voiceAudio.src = './voice.mp3.mp3';
+    voiceAudio.src = './voice.mp3';
     voiceAudio.preload = 'auto';
     voiceAudio.load();
     console.log('[voice] src set to:', voiceAudio.src);
