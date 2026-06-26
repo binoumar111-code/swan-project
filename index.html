@@ -118,7 +118,15 @@
       🎵 This song sings my heart
     </a>
     <div class="song-hint">Open it — let it stay with you</div>
-    <button class="voice-msg-btn" id="voiceBtn">🎙️ A message for you</button>
+    <div class="audio-player" id="voicePlayer">
+      <button class="audio-play-btn" id="voiceBtn" aria-label="Play voice message">
+        <span class="audio-play-icon" id="voicePlayIcon">▶</span>
+      </button>
+      <div class="audio-info">
+        <div class="audio-title">A message for you</div>
+        <div class="audio-hint" id="voiceHint">Tap to listen 🎙️</div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -339,9 +347,6 @@
       <div class="eyebrow reveal">In no particular order</div>
       <h2 class="title reveal d1">Why I <em>love you</em></h2>
       <div class="reasons-orbit reveal d2">
-        <div class="reasons-center">
-          <img src="images/mirror.jpg" alt="Swan" class="reasons-img">
-        </div>
         <div class="quote-bubbles">
           <div class="qb qb--left reveal d2">
             <span class="qb-num">01</span>

@@ -251,38 +251,19 @@
     margin-top:18px; font-family:'Inter',sans-serif; font-size:13px; color:rgba(250,246,234,0.72);
     text-align:center; max-width:84vw;
   }
-  .reasons-orbit{ max-width:480px; width:100%; margin:0 auto; position:relative; padding:30px 0; }
-  .reasons-center{
-    width:180px; height:180px; border-radius:50%; overflow:hidden; margin:0 auto;
-    border:2px solid var(--gold-dim); box-shadow:0 0 34px rgba(232,185,35,0.14);
-    position:relative; z-index:2;
-  }
-  .reasons-img{ width:100%; height:100%; object-fit:cover; }
+  .reasons-orbit{ max-width:480px; width:100%; margin:0 auto; }
   .quote-bubbles{
-    position:absolute; inset:0; display:grid; grid-template-columns:1fr 1fr;
-    gap:12px; padding:10px; align-items:center; justify-items:center;
+    display:flex; flex-direction:column;
+    gap:12px; padding:10px;
   }
   .qb{
-    width:calc(50% - 8px); background:rgba(250,246,234,0.05); border:1px solid var(--line);
-    border-radius:18px; padding:16px 18px; font-family:'Inter',sans-serif;
+    background:rgba(250,246,234,0.05); border:1px solid var(--line);
+    border-radius:14px; padding:16px 18px; font-family:'Inter',sans-serif;
     font-weight:300; font-size:14px; line-height:1.75; color:rgba(250,246,234,0.88);
-    text-align:left; backdrop-filter:blur(6px);
+    text-align:left;
   }
-  .qb--left{ justify-self:start; }
-  .qb--right{ justify-self:end; }
-  .qb--center{ grid-column:1/-1; width:90%; border-color:rgba(232,185,35,0.3); background:rgba(232,185,35,0.06); }
+  .qb--center{ border-color:rgba(232,185,35,0.3); background:rgba(232,185,35,0.06); }
   .qb-num{ display:block; font-size:10px; letter-spacing:0.15em; color:var(--gold-dim); margin-bottom:6px; }
-  .qb:before{
-    content:''; position:absolute; width:8px; height:8px; background:var(--gold);
-    border-radius:50%; top:14px;
-  }
-  .qb--left:before{ left:-10px; }
-  .qb--right:before{ right:-10px; }
-  .qb--center:before{ left:calc(50% - 4px); }
-  .reasons-orbit::before{
-    content:''; position:absolute; inset:0; border-radius:50%; border:1px dashed rgba(232,185,35,0.16);
-    z-index:1;
-  }
   .hub-card{
     background:rgba(250,246,234,0.04); border:1px solid var(--line); border-radius:16px;
     padding:22px 14px; cursor:pointer; transition:all .3s ease;
@@ -500,21 +481,14 @@
   }
 
   /* ============ REASONS — QUOTE BUBBLES ============ */
-  .reasons-orbit{ max-width:480px; width:100%; margin:0 auto; }
-  .reasons-center{
-    width:150px; height:150px; border-radius:50%; overflow:hidden; margin:28px auto;
-    border:2px solid var(--gold-dim); box-shadow:0 0 34px rgba(232,185,35,0.14);
-  }
-  .reasons-img{ width:100%; height:100%; object-fit:cover; }
+  .reasons-orbit{ max-width:520px; width:100%; margin:0 auto; }
   .quote-bubbles{ display:flex; flex-direction:column; gap:12px; padding:0 4px 20px; }
   .qb{
     background:rgba(250,246,234,0.04); border:1px solid var(--line); border-radius:14px;
     padding:14px 16px; font-family:'Inter',sans-serif; font-weight:300; font-size:14px;
     line-height:1.75; color:rgba(250,246,234,0.85); text-align:left;
   }
-  .qb--left{ border-bottom-left-radius:4px; margin-right:20px; }
-  .qb--right{ border-bottom-right-radius:4px; margin-left:20px; }
-  .qb--center{ margin:4px 0; border-color:rgba(232,185,35,0.3); background:rgba(232,185,35,0.05); }
+  .qb--center{ border-color:rgba(232,185,35,0.3); background:rgba(232,185,35,0.05); }
   .qb-num{ display:block; font-size:10px; letter-spacing:0.15em; color:var(--gold-dim); margin-bottom:5px; }
 
   /* ============ FUTURE / MYSTERY CARDS ============ */
@@ -741,21 +715,6 @@
   color:rgba(250,246,234,0.38); margin-top:3px;
 }
 
-/* ============ VOICE MESSAGE BUTTON ============ */
-.voice-msg-btn{
-  display:block;
-  margin:12px auto 0;
-  font-family:'Inter',sans-serif; font-size:13px; letter-spacing:0.08em;
-  color:var(--paper);
-  background:rgba(250,246,234,0.04);
-  border:1px solid var(--line);
-  padding:11px 22px; border-radius:30px;
-  cursor:pointer; transition:all .3s ease;
-  -webkit-tap-highlight-color:transparent;
-}
-.voice-msg-btn:hover{
-  background:rgba(232,185,35,0.06); border-color:var(--gold-dim);
-}
 
 /* ============ CONFETTI OVERLAY ============ */
 .confetti-overlay{
@@ -966,7 +925,6 @@
   .qb{ font-size:13px; padding:11px 13px; }
 
   .hub-song-area{ padding:24px 16px 16px; }
-  .voice-msg-btn{ font-size:12px; padding:10px 18px; }
 
   .heartbeat-orb{ width:280px; height:280px; }
 

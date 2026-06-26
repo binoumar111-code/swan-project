@@ -309,25 +309,29 @@
   })();
 
   /* ---------- voice message ---------- */
-  const voiceBtn = $('voiceBtn');
+  const voiceBtn    = $('voiceBtn');
+  const voiceIcon   = $('voicePlayIcon');
+  const voiceHint   = $('voiceHint');
   if(voiceBtn){
-    let voiceAudio = null;
-    let voicePlaying = false;
+    const voiceAudio = new Audio('voice.mp3');
     voiceBtn.addEventListener('click', () => {
-      if(!voiceAudio) voiceAudio = new Audio('voice.mp3');
-      if(!voicePlaying){
-        voiceAudio.play().catch(() => {
-          const orig = voiceBtn.textContent;
-          voiceBtn.textContent = '🎙️ Coming soon...';
-          setTimeout(() => { voiceBtn.textContent = orig; }, 2200);
-        });
-        voicePlaying = true;
-        voiceAudio.onended = () => { voicePlaying = false; };
+      if(voiceAudio.paused){
+        voiceAudio.play().then(() => {
+          voiceBtn.classList.add('playing');
+          if(voiceIcon) voiceIcon.textContent = '⏸';
+          if(voiceHint) voiceHint.textContent  = 'Playing… tap to pause';
+        }).catch(() => {});
       } else {
         voiceAudio.pause();
-        voiceAudio.currentTime = 0;
-        voicePlaying = false;
+        voiceBtn.classList.remove('playing');
+        if(voiceIcon) voiceIcon.textContent = '▶';
+        if(voiceHint) voiceHint.textContent  = 'Tap to listen 🎙️';
       }
+    });
+    voiceAudio.addEventListener('ended', () => {
+      voiceBtn.classList.remove('playing');
+      if(voiceIcon) voiceIcon.textContent = '▶';
+      if(voiceHint) voiceHint.textContent  = 'Tap to listen again 🎙️';
     });
   }
 
