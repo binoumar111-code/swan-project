@@ -313,14 +313,21 @@
   const voiceIcon   = $('voicePlayIcon');
   const voiceHint   = $('voiceHint');
   if(voiceBtn){
-    const voiceAudio = new Audio('voice.mp3');
+    const voiceAudio = new Audio();
+    voiceAudio.src = './voice.mp3.mp3';
+    voiceAudio.preload = 'auto';
+    voiceAudio.load();
+    console.log('[voice] src set to:', voiceAudio.src);
+    voiceAudio.addEventListener('canplay',  () => console.log('[voice] canplay — ready'));
+    voiceAudio.addEventListener('error',    () => console.error('[voice] load error — code:', voiceAudio.error && voiceAudio.error.code, voiceAudio.src));
     voiceBtn.addEventListener('click', () => {
+      console.log('[voice] clicked — paused:', voiceAudio.paused, 'readyState:', voiceAudio.readyState, 'src:', voiceAudio.src);
       if(voiceAudio.paused){
         voiceAudio.play().then(() => {
           voiceBtn.classList.add('playing');
           if(voiceIcon) voiceIcon.textContent = '⏸';
           if(voiceHint) voiceHint.textContent  = 'Playing… tap to pause';
-        }).catch(() => {});
+        }).catch(err => { console.error('[voice] play() rejected:', err); });
       } else {
         voiceAudio.pause();
         voiceBtn.classList.remove('playing');
