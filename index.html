@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Swan — A Birthday Gift</title>
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="locked">
+
+<!-- ============ GATE ============ -->
+<div id="gate">
+  <div class="gate-balloons" id="gateBalloons"></div>
+  <div class="gate-icon">🎈</div>
+  <div class="gate-eyebrow">A Private Space</div>
+  <h1 class="gate-title">This door opens with one <em>code</em></h1>
+  <p class="gate-hint">Hint: the day and month you came into the world ✨ (DD-MM)</p>
+  <form class="gate-form" id="gateForm">
+    <input type="text" class="gate-input" id="gateInput" placeholder="00-00" maxlength="5" inputmode="numeric" autocomplete="off">
+    <div class="gate-error" id="gateError">Try again, my love 🤍</div>
+    <button type="submit" class="gate-submit">Open my heart</button>
+  </form>
+</div>
+
+<!-- bg layers -->
+<div id="bgWash"></div>
+<div class="balloon-field" id="balloonField"></div>
+<div class="grain"></div>
+<div class="frame"></div>
+
+<!-- global fx overlays -->
+<div class="confetti-overlay" id="confettiOverlay"></div>
+<div class="birthday-msg-overlay" id="birthdayMsgOverlay">
+  <div class="birthday-msg-text">Happy Birthday, Swan 🎂</div>
+</div>
+
+<!-- sound fab -->
+<button class="sound-fab" id="soundBtn">♪</button>
+
+<!-- ============ CONSENT ============ -->
+<div id="consent" class="screen">
+  <div class="consent-inner">
+    <div class="consent-emoji">🎀</div>
+    <h2 class="consent-title">Hey beautiful,</h2>
+    <p class="consent-text" id="consentText">I made something just for you.<br>Do you want to see your birthday gift?</p>
+    <div class="consent-btns" id="consentBtns">
+      <button id="consentYes" class="consent-yes">Yes please 🌹</button>
+      <button id="consentNo" class="consent-no">Not yet...</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ HUB HOME SCREEN ============ -->
+<div id="hub" class="screen">
+  <div class="heartbeat-orb"></div>
+  <div class="hub-top">
+    <div class="hub-eyebrow">🎈 Happy Birthday</div>
+    <div class="hub-greeting">For <em>Swan</em></div>
+    <div class="hub-sub">Hey birthday girl, this one's for you 🌹</div>
+    <div class="hub-countdown">
+      <div class="hub-countdown-label">Birthday countdown</div>
+      <div class="hub-countdown-value" id="hubCountdown">00d 00h 00m 00s</div>
+    </div>
+  </div>
+  <div class="hub-stars" id="hubStars"></div>
+
+  <!-- Rose Garden -->
+  <div class="rose-garden">
+    <div class="rose-field" id="roseField"></div>
+    <div class="rose-garden-inner">
+      <button class="rose-btn" id="roseBtn" title="Tap to grow a rose">🌹</button>
+      <div class="rose-count" id="roseCount"></div>
+    </div>
+    <div class="rose-secret" id="roseSecret">You've unlocked something special 🌹</div>
+  </div>
+
+  <div class="hub-grid">
+    <button class="hub-card" data-open="ov-hero">
+      <div class="hub-card-icon">🎂</div>
+      <div class="hub-card-label">Birthday</div>
+    </button>
+    <button class="hub-card" data-open="ov-childhood">
+      <div class="hub-card-icon">📷</div>
+      <div class="hub-card-label">Before I Knew You</div>
+    </button>
+    <button class="hub-card" data-open="ov-wish">
+      <div class="hub-card-icon">🕯️</div>
+      <div class="hub-card-label">Make a Wish</div>
+    </button>
+    <button class="hub-card" data-open="ov-timeline">
+      <div class="hub-card-icon">📜</div>
+      <div class="hub-card-label">Our Story</div>
+    </button>
+    <button class="hub-card" data-open="ov-license">
+      <div class="hub-card-icon">🎓</div>
+      <div class="hub-card-label">The Graduation</div>
+    </button>
+    <button class="hub-card" data-open="ov-gallery">
+      <div class="hub-card-icon">📸</div>
+      <div class="hub-card-label">Our Photos</div>
+    </button>
+    <button class="hub-card" data-open="ov-reasons">
+      <div class="hub-card-icon">🌹</div>
+      <div class="hub-card-label">Why I Love You</div>
+    </button>
+    <button class="hub-card" data-open="ov-future">
+      <div class="hub-card-icon">✨</div>
+      <div class="hub-card-label">Our Future</div>
+    </button>
+    <button class="hub-card hub-card--wide" data-open="ov-letter">
+      <div class="hub-card-icon">💌</div>
+      <div class="hub-card-label">One Last Letter</div>
+    </button>
+  </div>
+
+  <div class="hub-song-area">
+    <a class="song-btn" href="https://youtu.be/0s_Bx21SACw?si=USQNS3LW3G_60Gqe" target="_blank" rel="noopener noreferrer">
+      🎵 This song sings my heart
+    </a>
+    <div class="song-hint">Open it — let it stay with you</div>
+    <button class="voice-msg-btn" id="voiceBtn">🎙️ A message for you</button>
+  </div>
+</div>
+
+<div id="lightbox" class="lightbox" aria-hidden="true">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Close photo">✕</button>
+  <img id="lightboxImg" src="" alt="" />
+  <div class="lightbox-caption" id="lightboxCaption"></div>
+</div>
+
+<!-- ============ OVERLAYS ============ -->
+
+<!-- HERO -->
+<div class="section-overlay" id="ov-hero">
+  <div class="ov-header"><button class="ov-back">← Home</button></div>
+  <div class="ov-scroll">
+    <section id="hero">
+      <div class="eyebrow">Happy Birthday</div>
+      <div class="hero-num" id="dayCounter">400</div>
+      <h1 class="hero-title">Every year, you are more <span class="gold">Swan</span></h1>
+    </section>
+  </div>
+</div>
+
+<!-- CHILDHOOD -->
+<div class="section-overlay" id="ov-childhood">
+  <div class="ov-header"><button class="ov-back">← Home</button></div>
+  <div class="ov-scroll">
+    <section id="childhood">
+      <div class="eyebrow reveal">Before anything else</div>
+      <h2 class="title reveal d1">Before I <em>knew you</em></h2>
+      <p class="body-text reveal d2" style="max-width:480px;">You were this little girl, celebrating a birthday so long ago — and I had no idea that one day I'd meet you, and your birthdays would become some of the most important days of my life.</p>
+      <div class="child-frame reveal d3">
+        <img src="images/childhood.jpg" alt="Swan in her childhood">
+        <div class="child-caption">Little Swan 🎈</div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- WISH -->
+<div class="section-overlay" id="ov-wish">
+  <div class="ov-header"><button class="ov-back">← Home</button></div>
+  <div class="ov-scroll">
+    <section id="wish">
+      <div class="eyebrow reveal">Close your eyes</div>
+      <h2 class="title reveal d1">Make a <em>wish</em></h2>
+      <p class="body-text reveal d2">Think of something you wish for — for yourself, for us, for anything. No one will see it but you.</p>
+
+      <!-- 3D Cake -->
+      <div class="cake-wrap reveal d3">
+        <div class="cake-3d">
+          <div class="candles-row">
+            <div class="candle-3d"><div class="candle-body"></div><div class="flame" id="flame"></div></div>
+            <div class="candle-3d"><div class="candle-body"></div><div class="flame flame--b"></div></div>
+            <div class="candle-3d"><div class="candle-body"></div><div class="flame flame--c"></div></div>
+          </div>
+          <div class="cake-top-tier">
+            <div class="cake-top-face"></div>
+            <div class="cake-top-front"></div>
+          </div>
+          <div class="cake-bot-tier">
+            <div class="cake-bot-face"></div>
+            <div class="cake-bot-front"></div>
+          </div>
+          <div class="cake-plate"></div>
+        </div>
+      </div>
+
+      <button class="blow-btn reveal d3" id="blowBtn">🕯️ Tap to blow out the candles</button>
+      <div class="wish-input-wrap" id="wishWrap">
+        <p style="font-family:'Inter',sans-serif; font-size:13px; color:rgba(250,246,234,0.5); margin-bottom:10px;">Write your wish here (just between you and yourself)</p>
+        <textarea class="wish-input" id="wishText" rows="3" placeholder="I wish..."></textarea>
+        <br>
+        <button class="wish-save" id="wishSave">Save it 🤍</button>
+        <div class="wish-saved-msg" id="wishSavedMsg">Saved — I hope it comes true, my love 🌙</div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- TIMELINE -->
+<div class="section-overlay" id="ov-timeline">
+  <div class="ov-header"><button class="ov-back">← Home</button></div>
+  <div class="ov-scroll">
+    <section id="timeline">
+      <div class="eyebrow reveal">Chapter One</div>
+      <h2 class="title reveal d1"><em>Moment by moment</em></h2>
+      <div class="divider reveal d1"></div>
+      <div class="tl-rail">
+        <div class="tl-item reveal d1">
+          <div class="tl-dot"></div>
+          <div class="tl-day">The Beginning</div>
+          <div class="tl-h">The moment your eyes <em>found</em> mine</div>
+          <p class="tl-p">It was just an ordinary day at the mall — until you looked up and recognized me, and your eyes met mine. In that second, your whole face lit up with a smile so wide it filled every corner of it. I didn't know it yet, but that was the moment everything started. I've been chasing that same smile in every moment we've shared since.</p>
+        </div>
+        <div class="tl-item reveal d2">
+          <div class="tl-dot"></div>
+          <div class="tl-day">Nights by the Sea</div>
+          <div class="tl-h">Where <em>conversations</em> ran deep</div>
+          <p class="tl-p">Between the sound of the waves and the quiet of the night, those were our most beautiful evenings. Not because the place was beautiful — because something in you makes even the sea feel calmer.</p>
+        </div>
+        <div class="tl-item reveal d3">
+          <div class="tl-dot"></div>
+          <div class="tl-day">The Boat Ride</div>
+          <div class="tl-h">Dancing, laughter, <em>love filling the air</em></div>
+          <p class="tl-p">If I could relive just one moment from everything we've shared, this would be near the top. My heart felt so light that night, and you were the reason.</p>
+        </div>
+        <div class="tl-item reveal d3">
+          <div class="tl-dot"></div>
+          <div class="tl-day">The Movies</div>
+          <div class="tl-h">Your hand in <em>mine</em>, in the dark</div>
+          <p class="tl-p">No grand moment, no big words — just your hand in mine in a dark theater. And somehow that small, quiet thing became one of my favorite feelings in the world.</p>
+        </div>
+        <div class="tl-item reveal d3">
+          <div class="tl-dot"></div>
+          <div class="tl-day">Every Day Since</div>
+          <div class="tl-h">Becoming a <em>better man</em>, because of you</div>
+          <p class="tl-p">Having you in my life didn't just make me happier — it made me a better person. More patient, more aware, more willing to grow. You bring out a version of me I actually like.</p>
+        </div>
+        <div class="tl-item reveal d4">
+          <div class="tl-dot"></div>
+          <div class="tl-day">Looking Forward</div>
+          <div class="tl-h">I can't wait for what's <em>next</em></div>
+          <p class="tl-p">I'm genuinely excited for your days ahead — the wins, the new chapters, the version of you that's still coming. Whatever it looks like, I want a front-row seat.</p>
+        </div>
+        <div class="tl-item reveal d4">
+          <div class="tl-dot"></div>
+          <div class="tl-day">Today</div>
+          <div class="tl-h">And watching you <em>grow</em></div>
+          <p class="tl-p">Thinking about scholarships abroad, building a podcast, earning a license you worked toward quietly. The most beautiful thing I see these days is you becoming a stronger version of yourself.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- LICENSE -->
+<div class="section-overlay ov-academic" id="ov-license">
+  <div class="ov-header ov-header--navy"><button class="ov-back">← Home</button></div>
+  <div class="ov-scroll">
+    <section id="license">
+      <div class="cert-card reveal d1">
+        <div class="cert-eyebrow">A Special Honor</div>
+        <div class="cert-name">Swan</div>
+        <div class="cert-line"></div>
+        <p class="cert-text">
+          In honor of an extraordinary achievement — earning your <strong style="color:var(--ivory)">psychology license</strong> —
+          the result of effort, patience, and a belief in yourself that never stopped, no matter what.
+        </p>
+        <div class="cert-seal">witnessed · believed · proud beyond words</div>
+      </div>
+      <p class="body-text reveal d2" style="margin-top:34px; max-width:560px;">
+        This isn't just a piece of paper. It's proof that you're capable, that you're consistent, and that everything you build matters.<br>
+        <strong>I'm proud of you in a way words can't fully capture.</strong>
+      </p>
+    </section>
+  </div>
+</div>
+
+<!-- GALLERY -->
+<div class="section-overlay" id="ov-gallery">
+  <div class="ov-header"><button class="ov-back">← Home</button></div>
+  <div class="ov-scroll">
+    <section id="gallery">
+      <div class="eyebrow reveal">Moments We Kept</div>
+      <h2 class="title reveal d1">Photos of <em>our memories</em></h2>
+      <div class="gallery-grid reveal d3">
+        <div class="g-item">
+          <img class="gallery-thumb" src="images/boat.jpg" data-full-src="images/boat.jpg" data-caption="The boat ride" alt="On the boat">
+          <div class="g-cap">The boat ride</div>
+        </div>
+        <div class="g-item">
+          <img class="gallery-thumb" src="images/kiss.jpg" data-full-src="images/kiss.jpg" data-caption="Quiet moments" alt="A quiet kiss">
+          <div class="g-cap">Quiet moments</div>
+        </div>
+        <div class="g-item">
+          <img class="gallery-thumb" src="images/mirror.jpg" data-full-src="images/mirror.jpg" data-caption="Just us" alt="Mirror selfie">
+          <div class="g-cap">Just us</div>
+        </div>
+        <div class="g-item">
+          <img class="gallery-thumb" src="images/night.jpg" data-full-src="images/night.jpg" data-caption="City nights" alt="Night out together">
+          <div class="g-cap">City nights</div>
+        </div>
+        <div class="g-item">
+          <img class="gallery-thumb" src="images/streets.jpg" data-full-src="images/streets.jpg" data-caption="Wandering together" alt="Walking the streets together">
+          <div class="g-cap">Wandering together</div>
+        </div>
+        <div class="g-item">
+          <img class="gallery-thumb" src="images/library.jpg" data-full-src="images/library.jpg" data-caption="Building her future" alt="Studying together for her license">
+          <div class="g-cap">Building her future</div>
+        </div>
+        <div class="g-item">
+          <img class="gallery-thumb" src="images/childhood.jpg" data-full-src="images/childhood.jpg" data-caption="Where it all began 🎈" alt="Little Swan">
+          <div class="g-cap">Where it all began 🎈</div>
+        </div>
+        <div class="g-item">
+          <img class="gallery-thumb" src="images/flowers.jpg.jpeg" data-full-src="images/flowers.jpg.jpeg" data-caption="A night worth remembering" alt="Flowers">
+          <div class="g-cap">A night worth remembering</div>
+        </div>
+        <div class="g-item">
+          <img class="gallery-thumb" src="images/sea.jpg.jpeg" data-full-src="images/sea.jpg.jpeg" data-caption="Our favorite spot" alt="By the sea">
+          <div class="g-cap">Our favorite spot</div>
+        </div>
+        <div class="g-item">
+          <img class="gallery-thumb" src="images/gift.jpg.jpeg" data-full-src="images/gift.jpg.jpeg" data-caption="Every occasion, with you" alt="A gift">
+          <div class="g-cap">Every occasion, with you</div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- REASONS -->
+<div class="section-overlay" id="ov-reasons">
+  <div class="ov-header"><button class="ov-back">← Home</button></div>
+  <div class="ov-scroll">
+    <section id="reasons">
+      <div class="eyebrow reveal">In no particular order</div>
+      <h2 class="title reveal d1">Why I <em>love you</em></h2>
+      <div class="reasons-orbit reveal d2">
+        <div class="reasons-center">
+          <img src="images/mirror.jpg" alt="Swan" class="reasons-img">
+        </div>
+        <div class="quote-bubbles">
+          <div class="qb qb--left reveal d2">
+            <span class="qb-num">01</span>
+            Because you're not afraid of hard questions — you face them with courage and depth.
+          </div>
+          <div class="qb qb--right reveal d3">
+            <span class="qb-num">02</span>
+            Because your smile from our first meeting is still the strongest image in my memory.
+          </div>
+          <div class="qb qb--left reveal d2">
+            <span class="qb-num">03</span>
+            Because you grow and change so bravely, and you make me believe change can be a beautiful thing.
+          </div>
+          <div class="qb qb--right reveal d3">
+            <span class="qb-num">04</span>
+            Because every night by the sea with you becomes the calmest moment of my week.
+          </div>
+          <div class="qb qb--left reveal d2">
+            <span class="qb-num">05</span>
+            Because you listen with your heart, not just your ears.
+          </div>
+          <div class="qb qb--right reveal d3">
+            <span class="qb-num">06</span>
+            Because you're a swan — calm on the surface, but full of a strength only the people who truly know you can see.
+          </div>
+          <div class="qb qb--center reveal d4">
+            <span class="qb-num">07</span>
+            Because having you in my life simply made me a better, happier man.
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- FUTURE / MYSTERY CARDS -->
+<div class="section-overlay" id="ov-future">
+  <div class="ov-header"><button class="ov-back">← Home</button></div>
+  <div class="ov-scroll">
+    <section id="future">
+      <div class="eyebrow reveal">What's still ahead</div>
+      <h2 class="title reveal d1">Our <em>Future Plans</em></h2>
+      <p class="body-text reveal d2" style="max-width:380px;">A few things I haven't told you yet. Tap each card to see what I mean.</p>
+      <div class="mystery-cards reveal d3">
+        <div class="mystery-card">
+          <div class="mc-inner">
+            <div class="mc-front">
+              <div class="mc-teaser">One day...</div>
+              <div class="mc-tap">tap to open ✦</div>
+            </div>
+            <div class="mc-back">We'll wake up somewhere new every morning — your coffee, my silence, and a view neither of us planned.</div>
+          </div>
+        </div>
+        <div class="mystery-card">
+          <div class="mc-inner">
+            <div class="mc-front">
+              <div class="mc-teaser">You'll see...</div>
+              <div class="mc-tap">tap to open ✦</div>
+            </div>
+            <div class="mc-back">Every late night you spent studying, building yourself — they add up. And I'll be there watching it all come true.</div>
+          </div>
+        </div>
+        <div class="mystery-card">
+          <div class="mc-inner">
+            <div class="mc-front">
+              <div class="mc-teaser">Trust me...</div>
+              <div class="mc-tap">tap to open ✦</div>
+            </div>
+            <div class="mc-back">The best chapters haven't started yet. But they will, and they'll be ours.</div>
+          </div>
+        </div>
+      </div>
+      <div class="future-closing reveal d4">To be continued... 🌹</div>
+    </section>
+  </div>
+</div>
+
+<!-- LETTER (name-gated) -->
+<div class="section-overlay" id="ov-letter">
+  <div class="ov-header"><button class="ov-back">← Home</button></div>
+  <div class="ov-scroll">
+    <div id="letterGate" class="name-gate">
+      <div class="ng-emoji">💌</div>
+      <h2 class="ng-title">One last surprise...</h2>
+      <p class="ng-text">Type your name to unlock this letter</p>
+      <input type="text" id="nameInput" class="ng-input" placeholder="Your name..." autocomplete="off" spellcheck="false">
+      <button id="nameSubmit" class="ng-submit">Unlock 🔓</button>
+      <div id="nameError" class="ng-error">Hmm, try your name again 🤍</div>
+    </div>
+    <div id="letterContent" style="display:none;">
+      <section id="letter">
+        <div class="eyebrow reveal">The Last Page</div>
+        <h2 class="title reveal d1">A letter <em>for you</em></h2>
+        <div class="divider reveal d1"></div>
+        <div class="letter-box reveal d2">
+          <p class="letter-body" id="letterBody"></p>
+          <div class="sig">— To always loving you</div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.77/Tone.js"></script>
+<script src="js/script.js"></script>
+</body>
+</html>
