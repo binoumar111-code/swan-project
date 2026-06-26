@@ -107,11 +107,11 @@
   });
 
   /* ---------- consent ---------- */
-  $('consentYes').addEventListener('click', () => { showScreen('hub'); startAudio(); });
+  $('consentYes').addEventListener('click', () => { showScreen('hub'); startMusic(); });
   $('consentNo').addEventListener('click', () => {
     $('consentText').innerHTML = "That's okay — it'll be here whenever you're ready. 🤍";
     $('consentBtns').innerHTML = '<button class="consent-yes" id="consentReady">I\'m ready 🌹</button>';
-    $('consentReady').addEventListener('click', () => { showScreen('hub'); startAudio(); });
+    $('consentReady').addEventListener('click', () => { showScreen('hub'); startMusic(); });
   });
 
   /* ---------- overlay system ---------- */
@@ -382,41 +382,25 @@ Happy birthday to the most beautiful gift this year brought me ❤`;
     })();
   }
 
-  /* ---------- ambient audio — simple piano only ---------- */
-  let audioStarted = false, soundOn = false;
+  /* ---------- background music ---------- */
+  const bgMusic = $('bgMusic');
 
-  function buildAudio(){
-    const reverb = new Tone.Reverb({ decay:4, wet:0.4 }).toDestination();
-    const piano = new Tone.PolySynth(Tone.Synth, {
-      oscillator: { type:'sine' },
-      envelope:   { attack:0.5, decay:1.5, sustain:0.3, release:2.5 }
-    }).connect(reverb);
-    piano.volume.value = -25;
-    const melody = ['C4','E4','G4','A4','G4'];
-    let step = 0;
-    Tone.Transport.bpm.value = 44;
-    new Tone.Loop(time => {
-      piano.triggerAttackRelease(melody[step % melody.length], '4n', time);
-      step++;
-    }, '2n').start(0);
-  }
-
-  async function startAudio(){
-    if(audioStarted) return; audioStarted = true;
-    await Tone.start();
-    Tone.Destination.volume.value = -30;
-    buildAudio();
-    Tone.Transport.start();
-    Tone.Destination.volume.rampTo(0, 3);
-    soundOn = true;
+  function startMusic(){
+    if(!bgMusic) return;
+    bgMusic.volume = 0.4;
+    bgMusic.play().catch(() => {});
     $('soundBtn').style.color = 'var(--gold)';
   }
 
-  $('soundBtn').addEventListener('click', async () => {
-    if(!audioStarted){ await startAudio(); return; }
-    soundOn = !soundOn;
-    Tone.Destination.mute = !soundOn;
-    $('soundBtn').style.color = soundOn ? 'var(--gold)' : 'rgba(250,246,234,0.4)';
+  $('soundBtn').addEventListener('click', () => {
+    if(!bgMusic) return;
+    if(bgMusic.paused){
+      bgMusic.play().catch(() => {});
+      $('soundBtn').style.color = 'var(--gold)';
+    } else {
+      bgMusic.pause();
+      $('soundBtn').style.color = 'rgba(250,246,234,0.4)';
+    }
   });
 
 })();
