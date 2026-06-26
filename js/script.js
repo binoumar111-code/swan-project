@@ -384,23 +384,41 @@ Happy birthday to the most beautiful gift this year brought me ❤`;
 
   /* ---------- background music ---------- */
   const bgMusic = $('bgMusic');
+  const soundBtn = $('soundBtn');
+
+  function setMusicPlaying(playing){
+    if(!soundBtn) return;
+    soundBtn.classList.remove('music-invite');
+    soundBtn.style.color = playing ? 'var(--gold)' : 'rgba(250,246,234,0.4)';
+  }
 
   function startMusic(){
     if(!bgMusic) return;
     bgMusic.volume = 0.4;
-    bgMusic.play().catch(() => {});
-    $('soundBtn').style.color = 'var(--gold)';
+    bgMusic.play().then(() => {
+      setMusicPlaying(true);
+    }).catch(() => {
+      /* autoplay blocked — pulse the button to invite her to tap */
+      if(soundBtn) soundBtn.classList.add('music-invite');
+    });
   }
 
-  $('soundBtn').addEventListener('click', () => {
-    if(!bgMusic) return;
-    if(bgMusic.paused){
-      bgMusic.play().catch(() => {});
-      $('soundBtn').style.color = 'var(--gold)';
-    } else {
-      bgMusic.pause();
-      $('soundBtn').style.color = 'rgba(250,246,234,0.4)';
-    }
-  });
+  if(bgMusic){
+    bgMusic.addEventListener('error', () => {
+      if(soundBtn) soundBtn.title = 'Music unavailable';
+    });
+  }
+
+  if(soundBtn){
+    soundBtn.addEventListener('click', () => {
+      if(!bgMusic) return;
+      if(bgMusic.paused){
+        bgMusic.play().then(() => setMusicPlaying(true)).catch(() => {});
+      } else {
+        bgMusic.pause();
+        setMusicPlaying(false);
+      }
+    });
+  }
 
 })();
